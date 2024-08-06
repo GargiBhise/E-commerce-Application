@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
 
   mongodb:
-    container_name: ms_mongodb
+    container_name: ms_mongo_db
     image: mongo
     ports:
       - 27017:27017
@@ -38,7 +38,9 @@ services:
       - mongo:/data
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    networks:
+      - microservices-net
 
   mongo-express:
     container_name: ms_mongo_express
@@ -49,7 +51,10 @@ services:
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=root
       - ME_CONFIG_MONGODB_ADMINPASSWORD=root
-      - ME_CONFIG_MONGODB_SERVER = mongodb
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    networks:
+      - microservices-net
+
 
   mail-dev:
     container_name: ms_mail_dev
